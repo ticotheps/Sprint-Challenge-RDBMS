@@ -10,6 +10,9 @@ exports.up = function(knex) {
             
         tbl
             .boolean('completed')
+            
+        tbl
+            .integer('project_id')
     });
 };
 

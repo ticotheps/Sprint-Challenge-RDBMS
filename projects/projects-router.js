@@ -52,6 +52,7 @@ router.get("/:id/actions", (req, res) => {
             completed: "actions.completed",
         })
         .where({ "projects.id": projectId })
+        .as('actionsForProject')
         .then(actionsOnProject => {
             res.status(200).json(actionsOnProject);
         })
