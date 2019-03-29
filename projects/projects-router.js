@@ -38,4 +38,23 @@ router.get('/:id', (req, res) => {
         });
 });
 
+router.post('/', (req, res) => {
+    // inserts a new project into the 'projects' table
+    db('projects')
+        .insert(req.body)
+        .then(ids => {
+            const id = ids[0];
+
+            db('projects')
+                .where({ id })
+                .first()
+                .then(project => {
+                    res.status(201).json(project);
+                });
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+});
+
 module.exports = router;
