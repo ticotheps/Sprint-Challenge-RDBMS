@@ -38,6 +38,28 @@ router.get('/:id', (req, res) => {
         });
 });
 
+router.get("/:id/actions", (req, res) => {
+    const projectId = req.params.id;
+
+    // retrieves a particular project (specified by the project's id)
+    // that also includes a list of all the associated actions with that project
+    db("actions")
+        .innerJoin("projects", "projects.id", "actions.id")
+        .select({
+            id: "actions.id",
+            description: "actions.description",
+            notes: "actions.notes",
+            completed: "actions.completed",
+        })
+        .where({ "projects.id": projectId })
+        .then(actionsOnProject => {
+            res.status(200).json(actionsOnProject);
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+});
+
 router.post('/', (req, res) => {
     // inserts a new project into the 'projects' table
     db('projects')
