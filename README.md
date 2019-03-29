@@ -37,11 +37,9 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
   RDBMS stands for ‘relational database management system’, while SQL stands for ‘structured query language.’ SQL is just the language that allows us to communicate WITH a RDBMS, whereas the RDBMS is the program that actually allows us to manage the resources within a database. For instance, SQLite is an example of a RDBMS that uses SQL. Also, SQLite Studio is a common  graphical user interface that makes it even easier for people to manage the resources within a SQLite database.
 
-
 2. Why do tables need a `primary key`?
 
   Tables need a primary key to uniquely identify each record in a table. This allows for similar records to be easily distinguishable. 
-
 
 3. What is the name given to a table column that references the primary key on another table.
 
