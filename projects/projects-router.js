@@ -41,24 +41,28 @@ router.get('/:id', (req, res) => {
 router.get("/:id/actions", (req, res) => {
     const projectId = req.params.id;
 
-    // retrieves a particular project (specified by the project's id)
-    // that also includes a list of all the associated actions with that project
-    db("actions")
-        .innerJoin("projects", "projects.id", "actions.id")
-        .select({
-            id: "actions.id",
-            description: "actions.description",
-            notes: "actions.notes",
-            completed: "actions.completed",
-        })
-        .where({ "projects.id": projectId })
-        .as('actionsForProject')
-        .then(actionsOnProject => {
-            res.status(200).json(actionsOnProject);
-        })
-        .catch(error => {
+    db("projects")
+    .where({ id: projectId })
+    .first()
+    .then(project => {
+        if (project) {
+            db("actions")
+                .where({ project_id : projectId })
+                .then(actions => {
+                    project.actions = actions;
+                    res.status(200).json(project);
+                    // res.status(200).json(actions);
+                })
+                .catch(error => {
+                    res.status(404).json(error);
+                });
+        } else {
             res.status(500).json(error);
-        });
+        }
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    });
 });
 
 router.post('/', (req, res) => {
